@@ -1,0 +1,15 @@
+{
+    "name": "lavamusic/rongcloud-sdk-php",
+    "autoload": {
+        "psr-4": {
+            "RongCloud\\": "src/RongCloud"
+        }
+    },
+    "authors": [
+        {
+            "name": "XueSiLf",
+            "email": "1592328848@qq.com"
+        }
+    ],
+    "require": {}
+}

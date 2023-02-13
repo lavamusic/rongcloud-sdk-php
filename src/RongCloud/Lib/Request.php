@@ -56,33 +56,18 @@ class Request
         if (is_string(RongCloud::$apiUrl)) {
             return RongCloud::$apiUrl;
         }
-        if(RONGCLOUOD_DOMAIN_CHANGE != true){
+        if(RONGCLOUOD_DOMAIN_CHANGE != true) {
             return RongCloud::$apiUrl[0];
         }
-        $seesionId = "RongCloudServerSDKUrl";
-        if (!session_id()) {
-            @session_start();
-        }
-        $oldSessionId = session_id();
-        session_write_close();
-        //切换到 sdk Session
-        session_id($seesionId);
-        session_start();
 
-        if (!isset($_SESSION['curl'])) {
-            $_SESSION['curl'] = RongCloud::$apiUrl[0];
-        }
+        $sessionUrl = RongCloud::$apiUrl[0];
+
         if ($nextUrl) {
-            $_SESSION['curl'] = $nextUrl;
+            echo ">>> nextUrl\n";
+            $sessionUrl = $nextUrl;
         }
 
-        $currentUrl = isset($_SESSION['curl']) ? $_SESSION['curl'] : RongCloud::$apiUrl[0];
-        session_write_close();
-        unset($_SESSION);
-        //切换到原始 SESSION
-        session_id($oldSessionId);
-        session_start();
-        setcookie("PHPSESSID", $oldSessionId);
+        $currentUrl = isset($sessionUrl) ? $sessionUrl : RongCloud::$apiUrl[0];
         return $currentUrl;
     }
 
@@ -204,7 +189,7 @@ class Request
 
     /**
      * 获取 POST（x-www-form-urlencoded）/GET 请求的参数
-     * 
+     *
      * @param $params 请求参数
      * @return bool|string
      */
