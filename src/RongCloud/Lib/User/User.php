@@ -84,8 +84,6 @@ class User
             'portrait' => 'portraitUri'
         ]);
 
-        var_dump($conf['url'], $User);
-
         $result = (new Request())->Request($conf['url'], $User);
         $bodyParameter = (new Request())->getQueryFields($User);
         $result = (new Utils())->responseError($result, $conf['response']['fail'], $bodyParameter);
