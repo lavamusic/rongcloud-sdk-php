@@ -17,6 +17,7 @@ class Request
     private $smsUrl = 'http://api.sms.ronghub.com/';
     private $connectTimeout = 20;
     private $timeout = 30;
+    private $debug = false;
 
     public function __construct()
     {
@@ -37,6 +38,7 @@ class Request
         } else {
             RongCloud::$apiUrl = $this->serverUrl;
         }
+        $this->debug = RongCloud::$debug;
         $this->serverUrl = $this->resetServerUrl();
     }
 
@@ -147,8 +149,23 @@ class Request
             $action .= strpos($action, '?') === false ? '?' : '&';
             $action .= $this->build_query($params);
         }
+
+        if ($this->debug) {
+            echo "request_url:" . $action . "\n";
+        }
+
         curl_setopt($ch, CURLOPT_URL, $action);
+
+        if ($this->debug) {
+            echo "request_http_method:" . $httpMethod . "\n";
+        }
+
         curl_setopt($ch, CURLOPT_POST, $httpMethod == 'POST');
+
+        if ($this->debug) {
+            echo "http_header:" . json_encode($httpHeader, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n";
+        }
+
         curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeader);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //处理http证书问题
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -164,8 +181,18 @@ class Request
             $ret = $this->getCurlError($ret);
         }
         $httpInfo = curl_getinfo($ch);
+
+        if ($this->debug) {
+            echo "response_http_info:" . json_encode($httpInfo, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n";
+        }
+
         curl_close($ch);
         $result = json_decode($ret, true);
+
+        if ($this->debug) {
+            echo "response_result:" . json_encode($result, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . "\n";
+        }
+
         if (isset($result['code']) && $result['code'] == 1000) {
         }
         if ($module == "im") {

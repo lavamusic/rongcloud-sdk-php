@@ -27,6 +27,12 @@ if (!defined('RONGCLOUOD_DOMAIN_CHANGE')) {
 class RongCloud
 {
     /**
+     * 调试模式
+     * @var bool
+     */
+    public static $debug;
+
+    /**
      * 应用 appkey
      *
      * @var string
@@ -48,7 +54,7 @@ class RongCloud
     public static $apiUrl;
 
     /**
-     * CURLOPT_CONNECTTIMEOUT 
+     * CURLOPT_CONNECTTIMEOUT
      *
      * @var int
      */
