@@ -13,7 +13,7 @@ class Request
     private $appKey = "";
     private $appSecret = "";
     //    private $serverUrl = 'https://api-rce-rcxtest.rongcloud.net/';
-    private $serverUrl = ['http://api-cn.ronghub.com/', 'http://api2-cn.ronghub.com/'];
+    private $serverUrl = ['https://api.rong-api.com/', 'https://api-b.rong-api.com/'];
     private $smsUrl = 'http://api.sms.ronghub.com/';
     private $connectTimeout = 20;
     private $timeout = 30;
